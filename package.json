@@ -1,0 +1,15 @@
+{
+  "engines": {
+    "node": ">=10.0.0",
+    "npm": ">=6.0.0"
+  },
+  "scripts": {
+    "deploy": "serverless deploy",
+    "remove": "serverless remove",
+    "offline": "serverless offline start"
+  },
+  "devDependencies": {
+    "serverless-offline": "^6.8.0",
+    "serverless-python-requirements": "^5.1.0"
+  }
+}
