@@ -62,7 +62,8 @@ def register(event, context):
     password = json.loads(event["body"])["password"]
     city = json.loads(event["body"])["city"]
 
-    client = pymongo.MongoClient("mongodb+srv://vikas:vikas1@cluster0.vbdq2.mongodb.net")
+    client = pymongo.MongoClient(
+        "mongodb+srv://vikas:vikas1@cluster0.vbdq2.mongodb.net")
     db = client["satyam-db"]
     collection = db["students"]
 
@@ -83,15 +84,40 @@ def getUser(event, context):
     # step1. Read email from query String Parameters
     email = event["queryStringParameters"]["email"]
 
-    #DB
-    client = pymongo.MongoClient("mongodb+srv://vikas:vikas1@cluster0.vbdq2.mongodb.net")
+    # DB
+    client = pymongo.MongoClient(
+        "mongodb+srv://vikas:vikas1@cluster0.vbdq2.mongodb.net")
     db = client["satyam-db"]
     collection = db["students"]
 
     # find one from the collection with matching email id
     document = collection.find_one({"email": email})
-    
+
     return {
         "statusCode": 200,
         "body": json.dumps(document, default=str)
+    }
+
+
+def updateUser(event, context):
+    # step1. Read email from query String Parameters
+    email = event["queryStringParameters"]["email"]
+
+    body = json.loads(event["body"])
+
+    
+   
+    # DB
+    client = pymongo.MongoClient(
+        "mongodb+srv://vikas:vikas1@cluster0.vbdq2.mongodb.net")
+    db = client["satyam-db"]
+    collection = db["students"]
+
+    collection.update({
+        "email": email
+    },{ "$set": body })
+
+    return {
+        "statusCode": 200,
+        "body": "Update Sucessful"
     }
